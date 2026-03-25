@@ -1,0 +1,459 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.header h1 {
+  font-size: 3rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.stat {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 15px 30px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  color: white;
+  font-weight: 700;
+}
+
+.question {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.question h2 {
+  font-size: 2rem;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+}
+
+.cars-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.car-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  min-width: 320px;
+  max-width: 450px;
+  flex: 1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 4px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.car-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.car-card:hover::before {
+  opacity: 1;
+}
+
+.car-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  border-color: #667eea;
+}
+
+.car-card.selected {
+  transform: translateY(-10px) scale(1.05);
+  border-color: #4ade80;
+  box-shadow: 0 15px 50px rgba(74, 222, 128, 0.4);
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  color: white;
+}
+
+.car-card.dimmed {
+  opacity: 0.4;
+  transform: scale(0.95);
+  cursor: not-allowed;
+}
+
+.car-emoji {
+  font-size: 6rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.car-card:hover .car-emoji {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.car-card.selected .car-emoji {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.car-name {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #333;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.car-card.selected .car-name {
+  color: white;
+}
+
+.car-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.car-category {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+  padding: 8px 16px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.car-card.selected .car-category {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.car-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+  transition: color 0.3s ease;
+  margin-top: 5px;
+}
+
+.car-card.selected .car-price {
+  color: white;
+}
+
+.car-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.car-card.selected .car-specs {
+  border-top-color: rgba(255, 255, 255, 0.3);
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.car-card.selected .spec-item {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.spec-label {
+  font-size: 0.75rem;
+  color: #888;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.car-card.selected .spec-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.spec-value {
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.car-card.selected .spec-value {
+  color: white;
+}
+
+.reliability-very-high {
+  color: #22c55e !important;
+}
+
+.reliability-high {
+  color: #4ade80 !important;
+}
+
+.reliability-medium {
+  color: #fbbf24 !important;
+}
+
+.reliability-low,
+.reliability-very-low {
+  color: #ef4444 !important;
+}
+
+.car-card.selected .reliability-very-high,
+.car-card.selected .reliability-high,
+.car-card.selected .reliability-medium,
+.car-card.selected .reliability-low,
+.car-card.selected .reliability-very-low {
+  color: white !important;
+  opacity: 0.95;
+}
+
+.vs-divider {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.progress {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+  transition: width 0.5s ease;
+  border-radius: 8px;
+}
+
+.progress-text {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.game-over {
+  text-align: center;
+  background: white;
+  padding: 60px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 100%;
+}
+
+.game-over h1 {
+  font-size: 3rem;
+  color: #667eea;
+  margin-bottom: 20px;
+}
+
+.game-over h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.game-over p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.reset-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.reset-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+}
+
+.reset-button:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .question h2 {
+    font-size: 1.5rem;
+  }
+
+  .cars-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .vs-divider {
+    transform: rotate(90deg);
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+
+  .car-card {
+    min-width: 280px;
+    padding: 30px;
+  }
+
+  .car-emoji {
+    font-size: 4rem;
+  }
+
+  .car-name {
+    font-size: 1.5rem;
+  }
+
+  .stats {
+    gap: 20px;
+  }
+
+  .stat {
+    padding: 10px 20px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .car-specs {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  .spec-item {
+    padding: 6px;
+  }
+
+  .spec-label {
+    font-size: 0.7rem;
+  }
+
+  .spec-value {
+    font-size: 0.85rem;
+  }
+
+  .car-price {
+    font-size: 1.2rem;
+  }
+}
+
